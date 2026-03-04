@@ -1,56 +1,41 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package isep.eapli.demoorm.presentation;
 
 import isep.eapli.demoorm.util.Console;
 
-/**
- *
- * @author mcn
- */
 public class MainMenu {
-    public static void mainLoop() {
-		int opcao = 0;
+	public static void mainLoop() {
+		int option = 0;
 		do {
-			opcao = menu();
-
-			switch (opcao) {
+			option = menu();
+			switch (option) {
 				case 0:
-					System.out.println("fim ...");
+					System.out.println("End of program.");
 					break;
 				case 1:
-					System.out.println("Ainda não implementado ...");
+					new CarGroupUI().registerCarGroup();
+					Console.waitForKey("\nPress Enter to continue...");
 					break;
-
 				case 2:
-					System.out.println("Ainda não implementado ...");
+					System.out.println("Not yet implemented - List all Car Groups.");
 					break;
-
-				
-				
 				default:
-					System.out.println("opcao não reconhecida.");
+					System.out.println("Option not recognized.");
 					break;
 			}
-		} while (opcao != 0);
-
+		} while (option != 0);
 	}
 
 	private static int menu() {
 		int option = -1;
 		System.out.println("");
 		System.out.println("=============================");
-		System.out.println(" Rent a Car ");
+		System.out.println("     Rent a Car ");
 		System.out.println("=============================\n");
-		System.out.println("1.Registar Grupo Automóvel");
-		System.out.println("2.Listar todos os Grupos Automóveis");          
-		
-        System.out.println("=============================");
-        System.out.println("0. Sair\n\n");
-		option = Console.readInteger("Por favor escolha opção");
+		System.out.println("1. Register Car Group");
+		System.out.println("2. List all Car Groups");
+		System.out.println("=============================");
+		System.out.println("0. Exit\n\n");
+		option = Console.readInteger("Please choose an option: ");
 		return option;
 	}
 }

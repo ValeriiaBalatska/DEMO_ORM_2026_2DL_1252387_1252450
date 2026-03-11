@@ -1,4 +1,4 @@
-# DEMO_ORM — Rent a Car 🚗
+# DEMO_ORM - Rent a Car 🚗
 
 A Java Maven project demonstrating JPA2/Hibernate ORM with an H2 relational database.  
 Built for the EAPLI course (PL1-PL2) following a **4-layer architecture** and the **DDD Repository pattern**.
@@ -24,8 +24,8 @@ RentalContract 1 ──── 1 Payment
 ```
 
 **Inheritance strategies:**
-- `Client` → `CorporateClient` / `IndividualClient` — **Single Table**
-- `Payment` → `CreditPayment` / `CheckPayment` — **Table Per Class**
+- `Client` → `CorporateClient` / `IndividualClient` - **Single Table**
+- `Payment` → `CreditPayment` / `CheckPayment` - **Table Per Class**
 
 ## Features
 
@@ -72,4 +72,6 @@ The application starts with pre-loaded data (`import.sql`):
 
 ## Authors
 
-EAPLI — ISEP — PL1-PL2 (2DL)
+Daniyar Zhumatayev (1252387)
+Valeriia Balatska (1252450)
+EAPLI - ISEP - PL1-PL2 (2DL)

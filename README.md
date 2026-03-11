@@ -72,6 +72,6 @@ The application starts with pre-loaded data (`import.sql`):
 
 ## Authors
 
-Daniyar Zhumatayev (1252387)
-Valeriia Balatska (1252450)
+Daniyar Zhumatayev (1252387), Valeriia Balatska (1252450)
+
 EAPLI - ISEP - PL1-PL2 (2DL)

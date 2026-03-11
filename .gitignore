@@ -1,0 +1,15 @@
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# H2 Database
+*.mv.db
+*.trace.db
+*.lock.db
+
+# OS
+.DS_Store
+Thumbs.db

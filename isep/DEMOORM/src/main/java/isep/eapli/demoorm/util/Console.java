@@ -12,8 +12,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -21,60 +19,59 @@ import java.util.logging.Logger;
  */
 public class Console {
 
+    private static final BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+
     public static String readLine(String prompt) {
         try {
-            System.out.println(prompt);
-            InputStreamReader converter = new InputStreamReader(System.in);
-            BufferedReader in = new BufferedReader(converter);
+            System.out.print(prompt);
             return in.readLine();
-        } catch (Exception ex1) {
-            Logger.getLogger(Console.class.getName()).log(Level.SEVERE,
-                    null, ex1);
-            return null;
+        } catch (IOException ex) {
+            System.out.println("  Error reading input. Please try again.");
+            return "";
         }
-
     }
 
     public static int readInteger(String prompt) {
         do {
             try {
                 String strInt = readLine(prompt);
-                int valor = Integer.parseInt(strInt);
-
-                return valor;
+                if (strInt == null || strInt.trim().isEmpty()) {
+                    System.out.println("  Please enter a valid number.");
+                    continue;
+                }
+                return Integer.parseInt(strInt.trim());
             } catch (NumberFormatException ex) {
-                Logger.getLogger(Console.class.getName()).log(Level.SEVERE,
-                        null, ex);
+                System.out.println("  Invalid input. Please enter a number.");
             }
-
         } while (true);
     }
 
     public static boolean readBoolean(String prompt) {
         do {
-            try {
-                String strBool = readLine(prompt).toLowerCase();
-                if (strBool.equals("y") || strBool.equals("s")) {
-                    return true;
-                } else if (strBool.equals("n")) {
-                    return false;
-                }
-            } catch (NumberFormatException ex) {
-                Logger.getLogger(Console.class.getName()).log(Level.SEVERE,
-                        null, ex);
-            } catch (Exception ex1) {
-                Logger.getLogger(Console.class.getName()).log(Level.SEVERE,
-                        null, ex1);
+            String strBool = readLine(prompt);
+            if (strBool == null || strBool.trim().isEmpty()) {
+                System.out.println("  Please enter 'y' or 'n'.");
+                continue;
             }
+            strBool = strBool.trim().toLowerCase();
+            if (strBool.equals("y") || strBool.equals("s") || strBool.equals("yes")) {
+                return true;
+            } else if (strBool.equals("n") || strBool.equals("no")) {
+                return false;
+            }
+            System.out.println("  Please enter 'y' or 'n'.");
         } while (true);
     }
 
     public static int readOption(int low, int high, int exit) {
         int option;
         do {
-            option = Console.readInteger("Introduza opção: ");
+            option = Console.readInteger("Choose option: ");
             if (option == exit) {
                 break;
+            }
+            if (option < low || option > high) {
+                System.out.println("  Please choose between " + low + " and " + high + " (or " + exit + " to exit).");
             }
         } while (option < low || option > high);
         return option;
@@ -84,18 +81,16 @@ public class Console {
         do {
             try {
                 String strDate = readLine(prompt);
+                if (strDate == null || strDate.trim().isEmpty()) {
+                    System.out.println("  Please enter a date (dd-MM-yyyy).");
+                    continue;
+                }
                 SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-                Date date = df.parse(strDate);
-
-                return date;
+                df.setLenient(false);
+                return df.parse(strDate.trim());
             } catch (ParseException ex) {
-                Logger.getLogger(Console.class.getName()).log(Level.SEVERE,
-                        null, ex);
-            } catch (Exception ex1) {
-                Logger.getLogger(Console.class.getName()).log(Level.SEVERE,
-                        null, ex1);
+                System.out.println("  Invalid date format. Please use dd-MM-yyyy.");
             }
-
         } while (true);
     }
 
@@ -103,16 +98,15 @@ public class Console {
         do {
             try {
                 String strDate = readLine(prompt);
+                if (strDate == null || strDate.trim().isEmpty()) {
+                    System.out.println("  Please enter a date (dd-MM-yyyy).");
+                    continue;
+                }
                 SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-                Calendar date = DateTime.dateToCalendar(df.parse(strDate));
-
-                return date;
+                df.setLenient(false);
+                return DateTime.dateToCalendar(df.parse(strDate.trim()));
             } catch (ParseException ex) {
-                Logger.getLogger(Console.class.getName()).log(Level.SEVERE,
-                        null, ex);
-            } catch (Exception ex1) {
-                Logger.getLogger(Console.class.getName()).log(Level.SEVERE,
-                        null, ex1);
+                System.out.println("  Invalid date format. Please use dd-MM-yyyy.");
             }
         } while (true);
     }
@@ -121,15 +115,13 @@ public class Console {
         do {
             try {
                 String input = readLine(prompt);
-                double valor = Double.parseDouble(input);
-
-                return valor;
+                if (input == null || input.trim().isEmpty()) {
+                    System.out.println("  Please enter a valid number.");
+                    continue;
+                }
+                return Double.parseDouble(input.trim());
             } catch (NumberFormatException ex) {
-                Logger.getLogger(Console.class.getName()).log(Level.SEVERE,
-                        null, ex);
-            } catch (Exception ex1) {
-                Logger.getLogger(Console.class.getName()).log(Level.SEVERE,
-                        null, ex1);
+                System.out.println("  Invalid input. Please enter a number.");
             }
         } while (true);
     }
@@ -137,14 +129,13 @@ public class Console {
     public static void waitForKey(String prompt) {
         System.out.println(prompt);
         try {
-            System.in.read();
+            in.readLine();
         } catch (IOException ex) {
-            Logger.getLogger(Console.class.getName()).log(Level.SEVERE, null,
-                    ex);
+            // silently continue
         }
     }
 
     private Console() {
-        // to make sure thi is an utility class
+        // to make sure this is an utility class
     }
 }

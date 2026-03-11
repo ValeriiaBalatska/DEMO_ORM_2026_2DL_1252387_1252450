@@ -1,31 +1,23 @@
 package isep.eapli.demoorm.persistence;
 
 import isep.eapli.demoorm.domain.CarGroup;
-import jakarta.persistence.EntityManager;
+import isep.eapli.demoorm.domain.CarClass;
 import java.util.List;
-import java.util.Optional;
 
-public class CarGroupRepositoryJPAImpl implements CarGroupRepository {
-
-    private final EntityManager em;
-
-    public CarGroupRepositoryJPAImpl(EntityManager em) { this.em = em; }
+public class CarGroupRepositoryJPAImpl extends JpaRepository<CarGroup, Long> implements CarGroupRepository {
 
     @Override
-    public CarGroup save(CarGroup carGroup) {
-        em.getTransaction().begin();
-        em.persist(carGroup);
-        em.getTransaction().commit();
-        return carGroup;
+    protected Class<CarGroup> entityClass() {
+        return CarGroup.class;
     }
 
     @Override
-    public Optional<CarGroup> findById(Long id) {
-        return Optional.ofNullable(em.find(CarGroup.class, id));
+    public List<CarGroup> findByName(String name) {
+        return findByAttribute("name", name);
     }
 
     @Override
-    public List<CarGroup> findAll() {
-        return em.createQuery("SELECT cg FROM CarGroup cg", CarGroup.class).getResultList();
+    public List<CarGroup> findByCarClass(CarClass carClass) {
+        return findByAttribute("carClass", carClass);
     }
 }

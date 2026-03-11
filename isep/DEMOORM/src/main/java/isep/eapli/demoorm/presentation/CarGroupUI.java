@@ -23,10 +23,9 @@ public class CarGroupUI {
         try {
             CarGroupService service = new CarGroupService();
             CarGroup cg = service.registerNewCarGroup(name, doors, price, carClass);
-            System.out.println("✅ Group created: " + cg);
-            service.close();
+            System.out.println("Group created: " + cg);
         } catch (Exception e) {
-            System.out.println("❌ Error: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
         }
     }
 
@@ -40,9 +39,8 @@ public class CarGroupUI {
             } else {
                 groups.forEach(System.out::println);
             }
-            service.close();
         } catch (Exception e) {
-            System.out.println("❌ Error: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
         }
     }
 
@@ -56,9 +54,46 @@ public class CarGroupUI {
                             cg -> System.out.println("Found: " + cg),
                             () -> System.out.println("No car group found with ID " + id)
                     );
-            service.close();
         } catch (Exception e) {
-            System.out.println("❌ Error: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    public void searchCarGroupByName() {
+        System.out.println("=== Search Car Group by Name ===");
+        String name = Console.readLine("Enter name: ");
+        try {
+            CarGroupService service = new CarGroupService();
+            List<CarGroup> groups = service.findCarGroupsByName(name);
+            if (groups.isEmpty()) {
+                System.out.println("No car groups found with name: " + name);
+            } else {
+                groups.forEach(System.out::println);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    public void searchCarGroupByClass() {
+        System.out.println("=== Search Car Group by Class ===");
+        System.out.println("Classes: 1-UTILITY  2-LUXURY  3-COMMERCIAL");
+        int choice = Console.readInteger("Choose class: ");
+        CarClass carClass = switch (choice) {
+            case 2 -> CarClass.LUXURY;
+            case 3 -> CarClass.COMMERCIAL;
+            default -> CarClass.UTILITY;
+        };
+        try {
+            CarGroupService service = new CarGroupService();
+            List<CarGroup> groups = service.findCarGroupsByClass(carClass);
+            if (groups.isEmpty()) {
+                System.out.println("No car groups found for class: " + carClass);
+            } else {
+                groups.forEach(System.out::println);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 }

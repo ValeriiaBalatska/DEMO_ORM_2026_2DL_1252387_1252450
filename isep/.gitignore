@@ -55,6 +55,7 @@ mvnw.cmd
 # H2 Database (for this assignment)
 *.mv.db
 *.trace.db
+*.lock.db
 
 # OS
 .DS_Store

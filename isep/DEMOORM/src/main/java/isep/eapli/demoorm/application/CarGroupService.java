@@ -4,16 +4,12 @@ import isep.eapli.demoorm.domain.CarGroup;
 import isep.eapli.demoorm.domain.CarClass;
 import isep.eapli.demoorm.persistence.CarGroupRepository;
 import isep.eapli.demoorm.persistence.CarGroupRepositoryJPAImpl;
-import jakarta.persistence.*;
 import java.util.List;
 import java.util.Optional;
 
 public class CarGroupService {
 
-    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("demoPU");
-
-    private final EntityManager em = emf.createEntityManager();
-    private final CarGroupRepository repository = new CarGroupRepositoryJPAImpl(em);
+    private final CarGroupRepository repository = new CarGroupRepositoryJPAImpl();
 
     public CarGroup registerNewCarGroup(String name, int doors, double price, CarClass carClass) {
         CarGroup carGroup = new CarGroup(name, doors, price, carClass);
@@ -28,7 +24,11 @@ public class CarGroupService {
         return repository.findById(id);
     }
 
-    public void close() {
-        em.close();
+    public List<CarGroup> findCarGroupsByName(String name) {
+        return repository.findByName(name);
+    }
+
+    public List<CarGroup> findCarGroupsByClass(CarClass carClass) {
+        return repository.findByCarClass(carClass);
     }
 }

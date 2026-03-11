@@ -10,7 +10,8 @@ import java.util.Optional;
 
 public class CarGroupService {
 
-    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("demoPU");
+    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("demoPU");
+
     private final EntityManager em = emf.createEntityManager();
     private final CarGroupRepository repository = new CarGroupRepositoryJPAImpl(em);
 
@@ -29,6 +30,5 @@ public class CarGroupService {
 
     public void close() {
         em.close();
-        emf.close();
     }
 }

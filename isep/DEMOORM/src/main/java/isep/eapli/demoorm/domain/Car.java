@@ -6,11 +6,18 @@ import jakarta.persistence.*;
 public class Car {
 
     @Id
+    @Column(name = "license_plate")
     private String licensePlate;
 
+    @Column(name = "manufacture_year")
     private int manufactureYear;
+
+    @Column(name = "acquisition_year")
     private int acquisitionYear;
+
     private String color;
+
+    @Column(name = "engine_displacement")
     private int engineDisplacement;
 
     @ManyToOne(optional = false)
